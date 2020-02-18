@@ -42,9 +42,9 @@ module.exports = class extends Language {
 			COMMANDMESSAGE_MISSING_OPTIONALS: (possibles) => `Missing a required option: (${possibles})`,
 			COMMANDMESSAGE_NOMATCH: (possibles) => `Your option didn't match any of the possibilities: (${possibles})`,
 			// eslint-disable-next-line max-len
-			MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) => `${tag} \n> **${error}** \n> You have **${time}** second${time === 1 ? '' : 's'} to respond to this prompt with a proper value.\n> Type \`${abortOptions.join('` OR `')}\` to cancel command execution.`,
+			MONITOR_COMMAND_HANDLER_REPROMPT: (tag, error, time, abortOptions) => `${tag} \n> **${error}** \n> You have **${time}** seconds to respond to this prompt with a proper value.\n> Type \`${abortOptions.join('` OR `')}\` to cancel command execution.`,
 			// eslint-disable-next-line max-len
-			MONITOR_COMMAND_HANDLER_REPEATING_REPROMPT: (tag, name, time, cancelOptions) => `${tag} \n> **${name}** is a repeating argument \n> You have **${time}** second${time === 1 ? '' : 's'} to respond to this prompt with additional valid arguments.\n> Type \`${cancelOptions.join('` OR `')}\` to cancel command execution.`,
+			MONITOR_COMMAND_HANDLER_REPEATING_REPROMPT: (tag, name, time, cancelOptions) => `${tag} \n> **${name}** is a repeating argument \n> You have **${time}** seconds to respond to this prompt with additional valid arguments.\n> Type \`${cancelOptions.join('` OR `')}\` to cancel command execution.`,
 			MONITOR_COMMAND_HANDLER_ABORTED: 'Command cancelled. ✅',
 			INHIBITOR_COOLDOWN: (remaining) => `> You have just used this command.\n> You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
 			INHIBITOR_DISABLED_GUILD: 'This command has been disabled by an admin in this guild.',
@@ -105,9 +105,9 @@ module.exports = class extends Language {
 			COMMAND_HELP_NODM: 'You have DMs disabled, I couldn\'t send you the commands in DMs. :b:RUH',
 			COMMAND_HELP_EXTENDED: 'Extended Help ::',
 			COMMAND_ENABLE: (type, name) => `+ Successfully enabled ${type}: ${name}`,
-			COMMAND_ENABLE_DESCRIPTION: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state will berestored on reboot.',
+			COMMAND_ENABLE_DESCRIPTION: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state will be restored on reboot.',
 			COMMAND_DISABLE: (type, name) => `+ Successfully disabled ${type}: ${name}`,
-			COMMAND_DISABLE_DESCRIPTION: 'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state will berestored on reboot.',
+			COMMAND_DISABLE_DESCRIPTION: 'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state will be restored on reboot.',
 			COMMAND_DISABLE_WARN: 'You probably don\'t want to disable that, since you wouldn\'t be able to run any command to enable it again',
 			COMMAND_CONF_NOKEY: 'You must provide a key',
 			COMMAND_CONF_NOVALUE: 'You must provide a value',
