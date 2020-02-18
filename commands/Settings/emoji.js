@@ -7,7 +7,8 @@ module.exports = class extends Command {
       description: language => language.get('COMMAND_EMOJI_DESCRIPTION'),
       usage: '<star:emoji>',
       runIn: ['text'],
-      permissionLevel: 6
+      permissionLevel: 6,
+      promptLimit: 3
     });
   }
 

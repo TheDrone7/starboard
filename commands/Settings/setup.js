@@ -8,7 +8,8 @@ module.exports = class extends Command {
       usage: '<channel:channel>',
 			runIn: ['text'],
 			permissionLevel: 6,
-			extendedHelp: language => language.get('COMMAND_SETUP_EXTENDED')
+			extendedHelp: language => language.get('COMMAND_SETUP_EXTENDED'),
+			promptLimit: 3
 		});
 	}
 

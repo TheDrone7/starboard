@@ -7,7 +7,8 @@ module.exports = class extends Command {
       description: language => language.get('COMMAND_RESET_DESCRIPTION'),
       usage: '<minimum|emoji>',
       runIn: ['text'],
-      permissionLevel: 6
+      permissionLevel: 6,
+      promptLimit: 3
     });
   }
 
