@@ -13,8 +13,9 @@ module.exports = class extends Event {
   }
 
   async run(react, user) {
-    let reaction = react.partial ? (await react.fetch()) : react;
-    let msg = reaction.message.partial ? (await reaction.message.fetch()) : reaction.message;
+    let msg, reaction;
+    reaction = react.partial ? (await react.fetch()) : react;
+    msg = reaction.message.partial ? (await reaction.message.fetch()) : reaction.message;
     if (msg.guild) {
       let guildData = await this.client.db.getGuild(msg.guild.id).catch(console.error);
       if (guildData) {

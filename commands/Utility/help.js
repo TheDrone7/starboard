@@ -25,37 +25,37 @@ module.exports = class extends Command {
 
 	async run(message, [command]) {
 		if (command) {
-      let embed = new MessageEmbed()
-        .setTitle(command.name.toUpperCase())
-        .setColor('GREEN')
-        .setTimestamp()
-        .setThumbnail(this.client.user.displayAvatarURL())
-        .addField('Description', isFunction(command.description) ? command.description(message.language) : command.description)
-        .addField('Usage', `\`${command.usage.fullUsage(message)}\``);
+			let embed = new MessageEmbed()
+				.setTitle(command.name.toUpperCase())
+				.setColor('GREEN')
+				.setTimestamp()
+				.setThumbnail(this.client.user.displayAvatarURL())
+				.addField('Description', isFunction(command.description) ? command.description(message.language) : command.description)
+				.addField('Usage', `\`${command.usage.fullUsage(message)}\``);
 
-        if (command.extendedHelp() !== message.language.get('COMMAND_HELP_NO_EXTENDED'))
-          embed.addField(message.language.get('COMMAND_HELP_EXTENDED'), isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp);
+			if (command.extendedHelp() !== message.language.get('COMMAND_HELP_NO_EXTENDED'))
+				embed.addField(message.language.get('COMMAND_HELP_EXTENDED'), isFunction(command.extendedHelp) ? command.extendedHelp(message.language) : command.extendedHelp);
 
 			return message.sendMessage(embed);
 		}
 
 		if (!('all' in message.flags) && message.guild && message.channel.permissionsFor(this.client.user).has(PERMISSIONS_RICHDISPLAY)) {
-      let msg = await message.send(new MessageEmbed().setDescription('Loading Commands...'));
+			let msg = await message.send(new MessageEmbed().setDescription('Loading Commands...'));
 			const previousHandler = this.handlers.get(message.author.id);
 			if (previousHandler) previousHandler.stop();
 
 			const handler = await (await this.buildDisplay(message)).run(msg, {
 				filter: (reaction, user) => user.id === message.author.id,
 				time,
-        firstLast: false
+				firstLast: false
 			});
-			
+
 			handler.removeAllListeners('end');
 			handler.on('end', () => {
-        this.handlers.delete(message.author.id);
-        message.delete();
-        msg.delete();
-      });
+				this.handlers.delete(message.author.id);
+				message.delete();
+				msg.delete();
+			});
 			this.handlers.set(message.author.id, handler);
 			return handler;
 		}
@@ -81,11 +81,13 @@ module.exports = class extends Command {
 		const commands = await this._fetchCommands(message);
 		const { prefix } = message.guildSettings;
 		const display = new RichDisplay();
+		display.setFooterPrefix('Page ');
 		const color = message.member.displayColor;
 		for (const [category, list] of commands) {
 			display.addPage(new MessageEmbed()
 				.setTitle(`${category} Commands`)
 				.setColor(color)
+				.setTimestamp()
 				.setDescription(list.map(this.formatCommand.bind(this, message, prefix, true)).join('\n'))
 			);
 		}
