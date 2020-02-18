@@ -4,6 +4,7 @@ module.exports = class extends Command {
 
   constructor(...args) {
     super(...args, {
+      aliases: ['min'],
       description: language => language.get('COMMAND_MINIMUM_DESCRIPTION'),
       usage: '<number:number>',
       runIn: ['text'],

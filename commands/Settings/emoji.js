@@ -4,6 +4,7 @@ module.exports = class extends Command {
 
   constructor(...args) {
     super(...args, {
+      aliases: ['star'],
       description: language => language.get('COMMAND_EMOJI_DESCRIPTION'),
       usage: '<star:emoji>',
       runIn: ['text'],

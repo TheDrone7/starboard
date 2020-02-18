@@ -4,6 +4,7 @@ module.exports = class extends Command {
 
   constructor(...args) {
     super(...args, {
+      aliases: ['chan', 'board'],
       description: language => language.get('COMMAND_CHANNEL_DESCRIPTION'),
       usage: '<channel:channel>',
       runIn: ['text'],
