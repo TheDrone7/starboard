@@ -5,7 +5,7 @@ module.exports = class extends Command {
   constructor(...args) {
     super(...args, {
       description: language => language.get('COMMAND_RESET_DESCRIPTION'),
-      usage: '<minimum|emoji>',
+      usage: '<minimum|emoji|min|star>',
       runIn: ['text'],
       permissionLevel: 6,
       promptLimit: 3
