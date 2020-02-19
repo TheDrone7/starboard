@@ -145,7 +145,7 @@ module.exports = class extends Language {
 			COMMAND_LEADERBOARD_DESCRIPTION: 'Displays the leaderboard (aka list of people with most number of stars in the server).',
 			NO_LEADERS: 'Sorry but there are no starred messages currently. Please star more messages.',
 
-			NO_SETUP: `The server is not set up yet. Use ${this.client.options.prefix}setup or use \`${this.client.options.prefix}help setup\` for more info.`
+			NO_SETUP: `The server is not set up yet. Use ${this.client.options.prefix}setup or use \`${this.client.options.prefix}help setup\` for more info.`,
 
 			GIVE_SUCCESS: (member, change) => `**${member.displayName}** has successfully been given \`${change}\` stars.`
 		}
