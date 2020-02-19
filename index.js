@@ -10,7 +10,7 @@ Client.prototype.db = require('./db/db');
 
 const config = new Object();
 config.fetchAllMembers = true;
-config.prefix = '*';
+config.prefix = 's!';
 config.commandEditing = true;
 config.commandLogging = true;
 config.typing = true;

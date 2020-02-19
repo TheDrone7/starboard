@@ -14,8 +14,12 @@ module.exports = class extends Command {
   }
 
   async run(message, [n]) {
-    await this.client.db.updateSettings(message.guild.id, 'minimum', n);
-    return await message.send(message.language.get('COMMAND_MINIMUM_SUCCESSFUL', n));
+    if (await this.client.db.getGuild(message.guild.id))
+      return await message.sendLocale('NO_SETUP');
+    else {
+      await this.client.db.updateSettings(message.guild.id, 'minimum', n);
+      return await message.send(message.language.get('COMMAND_MINIMUM_SUCCESSFUL', n));
+    }
   }
 
 };

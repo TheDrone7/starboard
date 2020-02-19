@@ -14,8 +14,12 @@ module.exports = class extends Command {
   }
 
   async run(message, [star]) {
-    await this.client.db.updateSettings(message.guild.id, 'emoji', star.name);
-    return await message.send(message.language.get('COMMAND_EMOJI_SUCCESSFUL', star));
+    if (await this.client.db.getGuild(message.guild.id))
+      return await message.sendLocale('NO_SETUP');
+    else {
+      await this.client.db.updateSettings(message.guild.id, 'emoji', star.name);
+      return await message.send(message.language.get('COMMAND_EMOJI_SUCCESSFUL', star));
+    }
   }
 
 };

@@ -14,18 +14,21 @@ module.exports = class extends Command {
 
   async run(message) {
     let guildData = await this.client.db.getGuild(message.guild.id);
-
-    return await message.send(new MessageEmbed()
-      .setTitle('SERVER INFO')
-      .setColor('YELLOW')
-      .setThumbnail(message.guild.iconURL())
-      .setTimestamp()
-      .addField('Name', message.guild.name)
-      .addField('ID', message.guild.id)
-      .addField('Channel', `<#${guildData.channel}>`, true)
-      .addField('Minimum', guildData.minimum, true)
-      .addField('Star Emoji', message.guild.emojis.find(e => e.name === guildData.emoji) || '⭐')
-    );
+    if (!guildData)
+      return await message.sendLocale('NO_SETUP');
+    else {
+      return await message.send(new MessageEmbed()
+        .setTitle('SERVER INFO')
+        .setColor('YELLOW')
+        .setThumbnail(message.guild.iconURL())
+        .setTimestamp()
+        .addField('Name', message.guild.name)
+        .addField('ID', message.guild.id)
+        .addField('Channel', `<#${guildData.channel}>`, true)
+        .addField('Minimum', guildData.minimum, true)
+        .addField('Star Emoji', message.guild.emojis.find(e => e.name === guildData.emoji) || '⭐')
+      );
+    }
   }
 
 };

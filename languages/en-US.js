@@ -13,7 +13,7 @@ module.exports = class extends Language {
 			}`,
 			RESOLVER_MULTI_TOO_FEW: (name, min = 1) => `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
 			RESOLVER_INVALID_BOOL: (name) => `${name} must be either \`true\` or \`false\`.`,
-			RESOLVER_INVALID_CHANNEL: (name) => `${name} must be a valid channel.`,
+			RESOLVER_INVALID_CHANNEL: (name) => `${name} must be a valid channel tag or ID.`,
 			RESOLVER_INVALID_CUSTOM: (name, type) => `${name} must be a valid ${type}.`,
 			RESOLVER_INVALID_DATE: (name) => `${name} must be a valid date.`,
 			RESOLVER_INVALID_DURATION: (name) => `${name} must be a valid duration string.`,
@@ -22,7 +22,7 @@ module.exports = class extends Language {
 			RESOLVER_INVALID_GUILD: (name) => `${name} must be a valid guild id.`,
 			RESOLVER_INVALID_INT: (name) => `${name} must be an integer.`,
 			RESOLVER_INVALID_LITERAL: (name) => `Your option did not match the only possibility: ${name}`,
-			RESOLVER_INVALID_MEMBER: (name) => `${name} must be a valid member of this server.`,
+			RESOLVER_INVALID_MEMBER: (name) => `${name} must be a valid member (mention or ID) of this server.`,
 			RESOLVER_INVALID_MESSAGE: (name) => `${name} must be a valid message id.`,
 			RESOLVER_INVALID_PIECE: (name, piece) => `${name} must be a valid ${piece} name.`,
 			RESOLVER_INVALID_REGEX_MATCH: (name, pattern) => `${name} must follow this regular expression pattern: \`${pattern}\`.`,
@@ -95,8 +95,7 @@ module.exports = class extends Language {
 					'The above link is generated requesting the minimum permissions required to use every command currently.',
 					'I know not all permissions are right for every guild, so don\'t be afraid to uncheck any of the boxes.',
 					'If you try to use a command that requires more permissions than the bot is granted, it will let you know.'
-				].join(' ')),
-				'Please file an issue at <https://github.com/dirigeants/klasa> if you find any bugs.'
+				].join(' '))
 			],
 			COMMAND_INVITE_DESCRIPTION: 'Displays the invite link of the bot, to invite it to your guild.',
 			COMMAND_HELP_DESCRIPTION: 'Display help for a command.',
@@ -104,24 +103,6 @@ module.exports = class extends Language {
 			COMMAND_HELP_DM: 'The list of commands you have access to has been sent to your DMs. ☑',
 			COMMAND_HELP_NODM: 'You have DMs disabled, I couldn\'t send you the commands in DMs. :b:RUH',
 			COMMAND_HELP_EXTENDED: 'Extended Help ::',
-			COMMAND_ENABLE: (type, name) => `+ Successfully enabled ${type}: ${name}`,
-			COMMAND_ENABLE_DESCRIPTION: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state will be restored on reboot.',
-			COMMAND_DISABLE: (type, name) => `+ Successfully disabled ${type}: ${name}`,
-			COMMAND_DISABLE_DESCRIPTION: 'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state will be restored on reboot.',
-			COMMAND_DISABLE_WARN: 'You probably don\'t want to disable that, since you wouldn\'t be able to run any command to enable it again',
-			COMMAND_CONF_NOKEY: 'You must provide a key',
-			COMMAND_CONF_NOVALUE: 'You must provide a value',
-			COMMAND_CONF_GUARDED: (name) => `${util.toTitleCase(name)} may not be disabled.`,
-			COMMAND_CONF_UPDATED: (key, response) => `Successfully updated the key **${key}**: \`${response}\``,
-			COMMAND_CONF_KEY_NOT_ARRAY: 'This key is not of type array. Use the action \'reset\' instead.',
-			COMMAND_CONF_GET_NOEXT: (key) => `The key **${key}** does not seem to exist.`,
-			COMMAND_CONF_GET: (key, value) => `The value for the key **${key}** is: \`${value}\``,
-			COMMAND_CONF_RESET: (key, response) => `The key **${key}** has been reset to: \`${response}\``,
-			COMMAND_CONF_NOCHANGE: (key) => `The value for **${key}** was already that value.`,
-			COMMAND_CONF_SERVER_DESCRIPTION: 'Define per-guild settings.',
-			COMMAND_CONF_SERVER: (key, list) => `**Guild Settings${key}**\n${list}`,
-			COMMAND_CONF_USER_DESCRIPTION: 'Define per-user settings.',
-			COMMAND_CONF_USER: (key, list) => `**User Settings${key}**\n${list}`,
 			COMMAND_STATS: (memUsage, uptime, users, guilds, channels, klasaVersion, discordVersion, processVersion, message) => [
 				'= STATISTICS =',
 				'',
@@ -136,8 +117,9 @@ module.exports = class extends Language {
 				`• Shard      :: ${(message.guild ? message.guild.shardID : 0) + 1} / ${this.client.options.totalShardCount}`
 			],
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
-			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
+			MESSAGE_PROMPT_TIMEOUT: 'The command prompt has timed out.',
 			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
+
 			COMMAND_SETUP_DESCRIPTION: 'Sets up the starboard feature for your server.',
 			COMMAND_SETUP_EXTENDED: [
 				'Sets up the database for usage of the starboard feature in your server.',
@@ -157,6 +139,13 @@ module.exports = class extends Language {
 			COMMAND_EMOJI_SUCCESSFUL: c => `The new \`star\` has been set to ${c}.`,
 			COMMAND_RESET_DESCRIPTION: 'Reset the emoji to the default star or reset the minimum number of required stars to 4.',
 			COMMAND_RESET_SUCCESSFUL: (s, v) => `The **${s}** has been reset to **${v}** for this server,`,
+
+			COMMAND_USER_INFO_DESCRIPTION: 'Displays brief details about a user.',
+			COMMAND_SERVER_INFO_DESCRIPTION: 'Displays brief details about the server',
+			COMMAND_LEADERBOARD_DESCRIPTION: 'Displays the leaderboard (aka list of people with most number of stars in the server).',
+			NO_LEADERS: 'Sorry but there are no starred messages currently. Please star more messages.',
+
+			NO_SETUP: `The server is not set up yet. Use ${this.client.options.prefix}setup or use \`${this.client.options.prefix}help setup\` for more info.`
 		}
 	}
 

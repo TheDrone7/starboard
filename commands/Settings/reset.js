@@ -13,13 +13,16 @@ module.exports = class extends Command {
   }
 
   async run(message, [option]) {
-    if (option === 'minimum' || option === 'min') {
-      await this.client.db.updateSettings(message.guild.id, 'minimum', 4);
-      return await message.send(message.language.get('COMMAND_RESET_SUCCESSFUL', 'minimum', 4));
-    }
-    else if (option === 'emoji' || option === 'star') {
-      await this.client.db.updateSettings(message.guild.id, 'emoji', '⭐');
-      return await message.send(message.language.get('COMMAND_RESET_SUCCESSFUL', 'emoji', '⭐'));
+    if (await this.client.db.getGuild(message.guild.id))
+      return await message.sendLocale('NO_SETUP');
+    else {
+      if (option === 'minimum' || option === 'min') {
+        await this.client.db.updateSettings(message.guild.id, 'minimum', 4);
+        return await message.send(message.language.get('COMMAND_RESET_SUCCESSFUL', 'minimum', 4));
+      } else if (option === 'emoji' || option === 'star') {
+        await this.client.db.updateSettings(message.guild.id, 'emoji', '⭐');
+        return await message.send(message.language.get('COMMAND_RESET_SUCCESSFUL', 'emoji', '⭐'));
+      }
     }
   }
 };

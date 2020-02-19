@@ -16,19 +16,24 @@ module.exports = class extends Command {
 
   async run(message, [user]) {
     let guildData = await this.client.db.getGuild(message.guild.id);
-    let userStars = guildData.members[user ? user.id : message.author.id] || 0;
-    let userPosts = Object.values(guildData.starred).filter(x => x.author === (user ? user.id : message.author.id));
 
-    return await message.send(new MessageEmbed()
-      .setTitle('USER INFO')
-      .setColor('YELLOW')
-      .setThumbnail(user ? user.user.displayAvatarURL() : message.author.displayAvatarURL())
-      .setTimestamp()
-      .addField('Name', user ? user.displayName : message.member.displayName)
-      .addField('ID', user ? user.id : message.author.id)
-      .addField('Stars', userStars, true)
-      .addField('Starred posts', userPosts.length || 0, true)
-    );
+    if (!guildData)
+      return await message.sendLocale('NO_SETUP');
+    else {
+      let userStars = guildData.members[user ? user.id : message.author.id] || 0;
+      let userPosts = Object.values(guildData.starred).filter(x => x.author === (user ? user.id : message.author.id));
+
+      return await message.send(new MessageEmbed()
+        .setTitle('USER INFO')
+        .setColor('YELLOW')
+        .setThumbnail(user ? user.user.displayAvatarURL() : message.author.displayAvatarURL())
+        .setTimestamp()
+        .addField('Name', user ? user.displayName : message.member.displayName)
+        .addField('ID', user ? user.id : message.author.id)
+        .addField('Stars', userStars, true)
+        .addField('Starred posts', userPosts.length || 0, true)
+      );
+    }
   }
 
 };

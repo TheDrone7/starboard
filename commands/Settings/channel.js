@@ -14,8 +14,12 @@ module.exports = class extends Command {
   }
 
   async run(message, [channel]) {
-    await this.client.db.updateSettings(message.guild.id, 'channel', channel.id);
-    return await message.send(message.language.get('COMMAND_CHANNEL_SUCCESSFUL', channel.id));
+    if (await this.client.db.getGuild(message.guild.id))
+      return await message.sendLocale('NO_SETUP');
+    else {
+      await this.client.db.updateSettings(message.guild.id, 'channel', channel.id);
+      return await message.send(message.language.get('COMMAND_CHANNEL_SUCCESSFUL', channel.id));
+    }
   }
 
 };
