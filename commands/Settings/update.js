@@ -5,7 +5,7 @@ module.exports = class extends Command {
 
   constructor(...args) {
     super(...args, {
-      aliases: ['e'],
+      aliases: ['give'],
       permissionLevel: 7,
       guarded: true,
       description: language => language.get('COMMAND_GIVE_DESCRIPTION'),
