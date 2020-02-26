@@ -1,4 +1,5 @@
 const { Language, util } = require('klasa');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = class extends Language {
 
@@ -65,10 +66,38 @@ module.exports = class extends Language {
 				'The --showHidden flag will enable the showHidden option in util.inspect.',
 				'If the output is too large, it will send the output as a file, or in the console if the bot does not have the ATTACH_FILES permission.'
 			].join('\n'),
-			COMMAND_EVAL_ERROR: (time, output, type) => `**Error**:${output}\n**Type**:${type}\n${time}`,
-			COMMAND_EVAL_OUTPUT: (time, output, type) => `**Output**:${output}\n**Type**:${type}\n${time}`,
-			COMMAND_EVAL_SENDFILE: (time, type) => `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
-			COMMAND_EVAL_SENDCONSOLE: (time, type) => `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
+			COMMAND_EVAL_ERROR: (time, output, type) => new MessageEmbed()
+				.setTitle('EVAL FAILED')
+				.setColor('DARK_RED')
+				.setTimestamp()
+				.setFooter(time)
+				.setThumbnail()
+				.addField('TYPE', type)
+				.addField('ERROR', output),
+			COMMAND_EVAL_OUTPUT: (time, output, type) => new MessageEmbed()
+				.setTitle('EVAL SUCCESSFUL')
+				.setColor('NAVY')
+				.setTimestamp()
+				.setFooter(time)
+				.setThumbnail()
+				.addField('TYPE', type)
+				.addField('OUTPUT', output),
+			COMMAND_EVAL_SENDFILE: (time, type) => new MessageEmbed()
+				.setTitle('EVAL SUCCESSFUL')
+				.setColor('NAVY')
+				.setTimestamp()
+				.setFooter(time)
+				.setThumbnail()
+				.addField('TYPE', type)
+				.addField('OUTPUT', `Output was too long... sent the result as a file.`),
+			COMMAND_EVAL_SENDCONSOLE: (time, type) => new MessageEmbed()
+				.setTitle('EVAL SUCCESSFUL')
+				.setColor('NAVY')
+				.setTimestamp()
+				.setFooter(time)
+				.setThumbnail()
+				.addField('TYPE', type)
+				.addField('OUTPUT', `\`Output was too long... sent the result to console.`),
 			COMMAND_UNLOAD: (type, name) => `✅ Unloaded ${type}: ${name}`,
 			COMMAND_UNLOAD_DESCRIPTION: 'Unloads the klasa piece.',
 			COMMAND_UNLOAD_WARN: 'You probably don\'t want to unload that, since you wouldn\'t be able to run any command to enable it again',
