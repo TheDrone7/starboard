@@ -23,7 +23,7 @@ config.presence = {
 };
 config.partials = ['REACTION', 'MESSAGE'];
 config.createPiecesFolders = false;
-config.ownerID = '417578954690527233';
+config.ownerID = '374886124126208000';
 config.disabledCorePieces = ['commands', 'languages'];
 
 const bot = new Client(config);
