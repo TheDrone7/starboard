@@ -1,4 +1,5 @@
 require('dotenv').config();
+const {Collection} = require('discord.js');
 
 const express = require('express');
 const app = express();
@@ -7,6 +8,7 @@ app.use(express.static('public'));
 const { Client } = require('klasa');
 
 Client.prototype.db = require('./db/db');
+Client.prototype.cachedData = new Collection();
 
 const config = new Object();
 config.fetchAllMembers = true;

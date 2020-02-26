@@ -16,7 +16,9 @@ module.exports = class extends Event {
     let reaction = react.partial ? (await react.fetch()) : react;
     let msg = reaction.message.partial ? (await reaction.message.fetch()) : reaction.message;
     if (msg.guild) {
-      let guildData = await this.client.db.getGuild(msg.guild.id).catch(console.error);
+      if (!this.client.cachedData.get(msg.guild.id))
+        this.client.cachedData.set(msg.guild.id, await this.client.db.getGuild(msg.guild.id).catch(console.error));
+      let guildData = this.client.cachedData.get(msg.guild.id);
       if (guildData) {
         if (msg.guild.channels.has(guildData.channel)) {
           if (Object.keys(guildData.starred).includes(msg.id)) {
@@ -25,6 +27,11 @@ module.exports = class extends Event {
             if (message) {
               if (stars.length < guildData.minimum) {
                 await message.delete();
+
+                delete guildData.starred[msg.id];
+                guildData.members[msg.author.id] -= guildData.minimum;
+                this.client.cachedData.set(msg.guild.id, guildData);
+
                 await this.client.db.removeStar(msg.guild.id, msg.id);
                 await this.client.db.modifyStars(msg.guild.id, msg.author.id, -1 * guildData.minimum);
               }
@@ -42,7 +49,14 @@ module.exports = class extends Event {
                 if (msg.content) embed.addField('Content', msg.content);
                 if (msg.attachments.size > 0) embed.setImage(msg.attachments.first().url);
 
-                let data = {stars: this.client.db.util.addToArray(...stars)};
+                let data = {stars: this.client.db.util.removeFromArray(user.id)};
+
+                let temp = guildData.starred[msg.id].stars;
+                temp.push(...stars);
+                temp.slice(temp.indexOf(user.id), 1);
+                guildData.starred[msg.id].stars = [...new Set(temp)];
+                guildData.members[msg.author.id] -= 1;
+                this.client.cachedData.set(msg.guild.id, guildData);
 
                 await message.edit(embed);
                 await this.client.db.updateStar(msg.guild.id, msg.id, data);
