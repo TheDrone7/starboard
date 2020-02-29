@@ -51,7 +51,7 @@ module.exports = class extends Command {
 
         let handler = await leaderboard.run(msg, {
           filter: (reaction, user) => user.id === message.author.id,
-          time: 120000,
+          time: Infinity,
           firstLast: false
         });
 
