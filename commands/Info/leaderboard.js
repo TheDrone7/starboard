@@ -42,7 +42,7 @@ module.exports = class extends Command {
             e.setColor('GOLD').setTimestamp().setThumbnail('https://cdn2.iconfinder.com/data/icons/flat-game-ui-buttons-icons-1/512/19-512.png');
             for (let j = 0; j < 7; j++) {
               if (((i * 7) + j + 1) <= leaders.length)
-                e.addField(`RANK ${(i * 7) + j + 1}`, `__${Object.keys(leaders[(i * 7) + j])[0]}__ **(${Object.values(leaders[(i * 7) + j])[0]} )**`);
+                e.addField(`RANK ${(i * 7) + j + 1}`, `__${Object.keys(leaders[(i * 7) + j])[0]}__ **(${Object.values(leaders[(i * 7) + j])[0]} ⭐)**`);
               else
                 break;
             }
