@@ -1,22 +1,25 @@
 {
-  "name": "starboard-new",
+  "name": "starboard",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "discord.js": "github:discordjs/discord.js#master",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "firebase-admin": "^8.9.2",
-    "fs-nextra": "^0.4.7",
-    "klasa": "github:dirigeants/klasa#master",
-    "node": "^13.10.1"
-  },
-  "devDependencies": {},
+  "description": "Repl.it starboard website.",
+  "author": "TheDrone7",
+  "private": true,
   "scripts": {
-    "start": "node index.js"
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/dotenv": "^1.4.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1"
+  }
 }
