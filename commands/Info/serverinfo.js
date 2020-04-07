@@ -26,7 +26,7 @@ module.exports = class extends Command {
         .addField('ID', message.guild.id)
         .addField('Channel', `<#${guildData.channel}>`, true)
         .addField('Minimum', guildData.minimum, true)
-        .addField('Star Emoji', message.guild.emojis.find(e => e.name === guildData.emoji) || '⭐')
+        .addField('Star Emoji', message.guild.emojis.cache.find(e => e.name === guildData.emoji) || '⭐')
       );
     }
   }

@@ -16,7 +16,7 @@ module.exports = class extends Command {
 
   async run(message, [member, change]) {
     await this.client.db.modifyStars(message.guild.id, member.id, change);
-    return await message.sendLocale('GIVE_SUCCESS', member, change);
+    return await message.send(message.language.get('GIVE_SUCCESS', member, change));
   }
 
 };

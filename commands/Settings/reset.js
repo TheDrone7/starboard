@@ -13,7 +13,7 @@ module.exports = class extends Command {
   }
 
   async run(message, [option]) {
-    if (await this.client.db.getGuild(message.guild.id))
+    if (!(await this.client.db.getGuild(message.guild.id)))
       return await message.sendLocale('NO_SETUP');
     else {
       if (option === 'minimum' || option === 'min') {

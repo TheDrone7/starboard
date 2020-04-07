@@ -7,13 +7,14 @@ module.exports = class extends Command {
       aliases: ['l', 'leaders'],
       guarded: true,
       description: language => language.get('COMMAND_LEADERBOARD_DESCRIPTION'),
-      runIn: ['text']
+      runIn: ['text'],
+      usage: '[page:number]'
     });
 
     this.handlers = new Map();
   }
 
-  async run(message) {
+  async run(message, [page]) {
     let msg = await message.send('', {embed: {description: 'Loading leaderboard'}});
     let guildData = await this.client.db.getGuild(message.guild.id);
     if (!guildData)
@@ -23,7 +24,7 @@ module.exports = class extends Command {
       Object.keys(guildData.members).forEach(id => {
         if (guildData.members[id] > 0) {
           let data = {};
-          data[(message.guild.members.get(id) ? message.guild.members.get(id).displayName : `<${id}>`)] = guildData.members[id];
+          data[(message.guild.members.cache.get(id) ?  message.guild.members.cache.get(id).displayName : `<${id}>`)] = guildData.members[id];
           leaders.push(data);
         }
       });
@@ -42,7 +43,7 @@ module.exports = class extends Command {
             e.setColor('GOLD').setTimestamp().setThumbnail('https://cdn2.iconfinder.com/data/icons/flat-game-ui-buttons-icons-1/512/19-512.png');
             for (let j = 0; j < 7; j++) {
               if (((i * 7) + j + 1) <= leaders.length)
-                e.addField(`RANK ${(i * 7) + j + 1}`, `__${Object.keys(leaders[(i * 7) + j])[0]}__ **(${Object.values(leaders[(i * 7) + j])[0]} ⭐)**`);
+                e.addField(`RANK ${(i * 7) + j + 1}`, `__${Object.keys(leaders[(i * 7) + j])[0]}__ **(${Object.values(leaders[(i * 7) + j])[0]} \\\⭐)**`);
               else
                 break;
             }
@@ -51,7 +52,8 @@ module.exports = class extends Command {
 
         let handler = await leaderboard.run(msg, {
           filter: (reaction, user) => user.id === message.author.id,
-          firstLast: false
+          firstLast: false,
+          startPage: page ? (page - 1) : 0
         });
 
         handler.removeAllListeners('end');

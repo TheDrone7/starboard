@@ -14,7 +14,7 @@ module.exports = class extends Command {
 	}
 
 	async run(message, [channel]) {
-    await this.client.db.setupGuild(message.guild.id, channel.id);
+    let guild = await this.client.db.setupGuild(message.guild.id, channel.id);
     return await message.send(message.language.get('COMMAND_SETUP_SUCCESSFUL', message.guild.name, channel.id));
 	}
 

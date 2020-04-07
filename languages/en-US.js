@@ -72,32 +72,37 @@ module.exports = class extends Language {
 				.setTimestamp()
 				.setFooter(time)
 				.setThumbnail()
-				.addField('TYPE', type)
-				.addField('ERROR', output),
+				.addFields([{name: 'TYPE',value: type}, {name: 'ERROR', value: output}]),
 			COMMAND_EVAL_OUTPUT: (time, output, type) => new MessageEmbed()
 				.setTitle('EVAL SUCCESSFUL')
 				.setColor('NAVY')
 				.setTimestamp()
 				.setFooter(time)
 				.setThumbnail()
-				.addField('TYPE', type)
-				.addField('OUTPUT', output),
+				.addFields([
+          {name: 'TYPE', value: type},
+          {name: 'OUTPUT', value: output}
+        ]),
 			COMMAND_EVAL_SENDFILE: (time, type) => new MessageEmbed()
 				.setTitle('EVAL SUCCESSFUL')
 				.setColor('NAVY')
 				.setTimestamp()
 				.setFooter(time)
 				.setThumbnail()
-				.addField('TYPE', type)
-				.addField('OUTPUT', `Output was too long... sent the result as a file.`),
+				.addFields([
+          {name: 'TYPE', value: type},
+          {name: 'OUTPUT', value: `Output was too long... sent the result as a file.`}
+        ]),
 			COMMAND_EVAL_SENDCONSOLE: (time, type) => new MessageEmbed()
 				.setTitle('EVAL SUCCESSFUL')
 				.setColor('NAVY')
 				.setTimestamp()
 				.setFooter(time)
 				.setThumbnail()
-				.addField('TYPE', type)
-				.addField('OUTPUT', `\`Output was too long... sent the result to console.`),
+				.addFields([
+          {name: 'TYPE', value: type},
+          {name: 'OUTPUT', value: `\`Output was too long... sent the result to console.`}
+        ]),
 			COMMAND_UNLOAD: (type, name) => `✅ Unloaded ${type}: ${name}`,
 			COMMAND_UNLOAD_DESCRIPTION: 'Unloads the klasa piece.',
 			COMMAND_UNLOAD_WARN: 'You probably don\'t want to unload that, since you wouldn\'t be able to run any command to enable it again',
@@ -163,6 +168,7 @@ module.exports = class extends Language {
 			COMMAND_CHANNEL_DESCRIPTION: 'Changes the channel to be used for starboard to the provided channel',
 			COMMAND_CHANNEL_SUCCESSFUL: c => `The starboard channel has been set to <#${c}>.`,
 			COMMAND_MINIMUM_DESCRIPTION: 'Changes the minimum number of reactions required for a message to be starred.',
+      MINIMUM_TOO_LOW: 'The minmum number of stars has to be greater than or equal to 2.',
 			COMMAND_MINIMUM_SUCCESSFUL: c => `The minimum number of required stars has been set to \`${c}\`.`,
 			COMMAND_EMOJI_DESCRIPTION: 'Changes the the emoji to be considered as a `star`. Can only be used for a custom emoji.',
 			COMMAND_EMOJI_SUCCESSFUL: c => `The new \`star\` has been set to ${c}.`,

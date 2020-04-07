@@ -20,7 +20,7 @@ module.exports = class extends Event {
         this.client.cachedData.set(msg.guild.id, await this.client.db.getGuild(msg.guild.id).catch(console.error));
       let guildData = this.client.cachedData.get(msg.guild.id);
       if (guildData) {
-        if (msg.guild.channels.has(guildData.channel)) {
+        if (msg.guild.channels.cache.has(guildData.channel)) {
           let stars = (await reaction.users.fetch()).filter(u => u.id !== msg.author.id).map(v => v.id);
           if (stars.length >= guildData.minimum && reaction.emoji.name === guildData.emoji) {
             if (msg.channel.id === guildData.channel && msg.author.id === this.client.user.id) {
@@ -41,11 +41,11 @@ module.exports = class extends Event {
                 if (msg.content) embed.addField('Content', msg.content);
                 if (msg.attachments.size > 0) embed.setImage(msg.attachments.first().url);
 
-                let starEmbed = await msg.guild.channels.get(guildData.channel).messages.fetch(guildData.starred[msg.id].embedId).catch(console.error);
+                let starEmbed = await msg.guild.channels.cache.get(guildData.channel).messages.fetch(guildData.starred[msg.id].embedId).catch(console.error);
                 if (starEmbed)
                   await starEmbed.edit(embed);
                 else
-                  data.embedId = (await msg.guild.channels.get(guildData.channel).send(embed)).id;
+                  data.embedId = (await msg.guild.channels.cache.get(guildData.channel).send(embed)).id;
 
                 let temp = guildData.starred[msg.id].stars;
                 temp.push(...stars);
@@ -80,7 +80,7 @@ module.exports = class extends Event {
                 guildData.members[msg.author.id] ? guildData.members[msg.author.id] += stars.length : guildData.members[msg.author.id] = stars.length;
                 this.client.cachedData.set(msg.guild.id, guildData);
 
-                starData.embedId = (await msg.guild.channels.get(guildData.channel).send(embed)).id;
+                starData.embedId = (await msg.guild.channels.cache.get(guildData.channel).send(embed)).id;
                 await this.client.db.updateStar(msg.guild.id, msg.id, starData);
                 await this.client.db.modifyStars(msg.guild.id, msg.author.id, stars.length);
               }
